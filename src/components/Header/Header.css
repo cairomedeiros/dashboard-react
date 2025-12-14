@@ -1,8 +1,7 @@
 .header {
   height: 60px;
   padding: 0 16px;
-  border-bottom: 1px solid #ddd;
-
+  background-color: var(--surface);
   display: flex;
   align-items: center;
   justify-content: space-between;
