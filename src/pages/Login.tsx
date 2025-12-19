@@ -1,11 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useContext} from "react";
+import AuthContext from "../contexts/auth";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const loginTime = useRef("");
+  const context = useContext(AuthContext);
 
-  function handleSubmit(event: React.FormEvent) {
+  function handleLogin(event: React.FormEvent) {
     loginTime.current = new Date().toTimeString();
     event.preventDefault();
     console.log("Logging in with", { username, password });
@@ -13,15 +15,9 @@ export default function Login() {
 
     localStorage.setItem("username", username);
     localStorage.setItem("loginTime", loginTime.current);
+    console.log("Context", context);
   }
 
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    console.log("Stored username:", storedUsername);
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
-  }, []);
 
   return (
     <>
@@ -29,7 +25,7 @@ export default function Login() {
       <h1>My login</h1>
     </header>
     <main>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleLogin}>
       <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username"/>
       <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password"/>
 
