@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const initTime = useRef("");
 
   function handleSubmit(event: React.FormEvent) {
+    initTime.current = new Date().toTimeString();
     event.preventDefault();
     console.log("Logging in with", { username, password });
+    console.log("UseRef", initTime.current);
   }
+
   return (
     <>
     <header className="login">
