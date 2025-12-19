@@ -1,16 +1,27 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const initTime = useRef("");
+  const loginTime = useRef("");
 
   function handleSubmit(event: React.FormEvent) {
-    initTime.current = new Date().toTimeString();
+    loginTime.current = new Date().toTimeString();
     event.preventDefault();
     console.log("Logging in with", { username, password });
-    console.log("UseRef", initTime.current);
+    console.log("UseRef", loginTime.current);
+
+    localStorage.setItem("username", username);
+    localStorage.setItem("loginTime", loginTime.current);
   }
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    console.log("Stored username:", storedUsername);
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   return (
     <>
